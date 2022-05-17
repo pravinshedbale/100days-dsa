@@ -32,6 +32,49 @@ TreeNode<int>* takeInputLevelWise() {
     return root;
 }
 
+
+int getHeight(TreeNode<int> *root) {
+    int h=0;
+    for(int i=0; i<root->children.size(); i++) {
+        int childH = getHeight(root->children[i]);
+        h = max(childH, h);
+    }
+    h+=1;
+    return h;
+}
+
+int getNodeSum(TreeNode<int> *root) {
+    queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    int sum = 0;
+    while(pendingNodes.size()!=0) {
+        TreeNode<int> *front = pendingNodes.front();
+        pendingNodes.pop();
+        sum+=front->data;
+        for(int i=0; i<front->children.size(); i++) {
+            pendingNodes.push(front->children[i]);
+        }
+    }
+    return sum;
+}
+
+int getMaxNode(TreeNode<int> *root) {
+    queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    int max = root->data;
+    while(pendingNodes.size()!=0) {
+        TreeNode<int> *front = pendingNodes.front();
+        pendingNodes.pop();
+        if(front->data>max) {
+            max = front->data;
+        }
+        for(int i=0; i<front->children.size(); i++) {
+            pendingNodes.push(front->children[i]);
+        }
+    }
+    return max;
+}
+
 void printLevelWise(TreeNode<int>* root) {
     queue<TreeNode<int>*> pendingNodes;
     pendingNodes.push(root);
@@ -67,12 +110,50 @@ void printTree(TreeNode<int>* root) {
     }
 }
 
+void printAtLevelK(TreeNode<int> *root, int k) {
+    if(root==NULL) {
+        return;
+    }
+    if(k==0) {
+        cout<<root->data<<" ";
+    }
+    for(int i=0; i<root->children.size(); i++) {
+        printAtLevelK(root->children[i], k-1);
+    }
+}
+
+int numberOfLeafNodes(TreeNode<int> *root) {
+    int count=0;
+    if(root==NULL) {
+        return 0;
+    }
+    if(root->children.size()==0) {
+        count++;
+    }
+    for(int i=0; i<root->children.size(); i++) {
+        count = count + numberOfLeafNodes(root->children[i]);
+    }
+    return count;
+}
+
 int main() {
+    int l=2;
     TreeNode<int>* root = takeInputLevelWise();
     cout<<"Level Wise Printing"<<endl;
     printLevelWise(root);
 
-    cout<<"Simple Printing";
+    cout<<"Simple Printing"<<endl;
     printTree(root);
+
+    cout<<"Sum of All Nodes is "<<getNodeSum(root)<<endl;
+    
+    cout<<"Max of All Nodes is "<<getMaxNode(root)<<endl;
+    cout<<"Height of tree is "<<getHeight(root)<<endl;
+    
+    cout<<"Nodes at Level "<<l<<" : ";
+    printAtLevelK(root, l);
+    cout<<endl;
+
+    cout<<"Number of leaf nodes are : "<<numberOfLeafNodes(root)<<endl;
     return 0;
 }
