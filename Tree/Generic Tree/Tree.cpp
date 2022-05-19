@@ -136,6 +136,27 @@ int numberOfLeafNodes(TreeNode<int> *root) {
     return count;
 }
 
+void preorder(TreeNode<int> *root) {
+    cout<<root->data<<" ";
+    for(int i=0; i<root->children.size(); i++){
+        preorder(root->children[i]);
+    }
+}
+
+void postorder(TreeNode<int> *root) {
+    for(int i=0; i<root->children.size(); i++) {
+        postorder(root->children[i]);
+    }
+    cout<<root->data<<" ";
+}
+
+void deleteTree(TreeNode<int> *root) {
+    for(int i=0; i<root->children.size(); i++) {
+        deleteTree(root->children[i]);
+    }
+    delete root;
+}
+
 int main() {
     int l=2;
     TreeNode<int>* root = takeInputLevelWise();
@@ -155,5 +176,15 @@ int main() {
     cout<<endl;
 
     cout<<"Number of leaf nodes are : "<<numberOfLeafNodes(root)<<endl;
+
+    cout<<"Preorder Traversal"<<endl;
+    preorder(root);
+    cout<<endl;
+
+    cout<<"Postorder Traversal"<<endl;
+    postorder(root);
+    cout<<endl;
+
+
     return 0;
 }
