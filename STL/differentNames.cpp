@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<set>
+#include<string>
+#include<map>
 using namespace std;
 int main() {
     string s;
