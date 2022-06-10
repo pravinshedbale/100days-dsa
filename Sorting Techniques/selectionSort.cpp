@@ -5,17 +5,15 @@ using namespace std;
 
 // Enhanced version of the bubble sort
 void selectionSort(int *arr, int n) {
-    int minIndex=0;
-    for(int i=0; i<n-1; i++) {
-        minIndex=i;
-        for(int j=i+1; j<n; j++) {
-            if(arr[j]<arr[i]) {
-                minIndex=j;
-            }
+    int i, j, temp;
+    for(int i=1; i<n; i++) {
+        temp = arr[i];
+        j=i;
+        while(arr[j-1]>temp && j>=1) {
+            arr[j] = arr[j-1];
+            j--;
         }
-        int temp = arr[minIndex];
-        arr[minIndex] = arr[i];
-        arr[i] = temp;
+        arr[j] = temp;
     }
 }
 
