@@ -29,7 +29,7 @@ int main() {
     for(int i=0; i<n; i++) {
         cin>>arr[i];
     }
-    vector<int> ans = subarraySum(arr, n, );
+    vector<int> ans = subarraySum(arr, n, s);
     for(int i=0; i<ans.size(); i++) {
         cout<<ans[i]<<" ";
     }
